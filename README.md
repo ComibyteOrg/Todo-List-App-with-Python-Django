@@ -74,7 +74,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 2.  Log in with your new credentials.
 3.  You will be redirected to your personal to-do list.
 4.  Use the input field to add new tasks.
-5.  Click the `✓` button to toggle a task's completion status.
+5.  Check `✓` the checkbox to toggle a task's completion status.
 6.  Click the `×` button to delete a task.
 7.  Click "Logout" when you are finished.
 
