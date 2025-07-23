@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+    <style>
+        .todo-check:checked ~ label{
+            text-decoration: line-through;
+            color: #ccc;    
+        }
+        .logout-btn{
+            border: none;
+            padding: 10px 40px;
+            margin-top: 20px;
+            color: white;
+            background-color: var(--danger);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    </style>
+
+     <div class="todo-app">
+        <header class="app-header">
+            <h1>{{ request.user.username }} To-Do App</h1>
+            <p>Get things done, one task at a time</p>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </header>
+        
+        <form class="todo-input" method="post" action="{% url 'add_task' %}">
+            {% csrf_token %}
+            <input type="text" placeholder="Add a new task..." name="newTask">
+            <button type="submit">Add Task</button>
+        </form>
+        
+        <ul class="todo-list">
+            {% for task in todo %}
+                <li class="todo-item {% if task.completed %}completed{% endif %}" style="justify-content: space-between;">
+                    <div style="display: flex; align-items: flex-start; flex-grow: 1;">
+                        <input type="checkbox" class="todo-check" id="task-check-{{ task.id }}" data-task-id="{{ task.id }}" {% if task.completed %}checked{% endif %} style="margin-top: 5px;">
+                        <label for="task-check-{{ task.id }}" class="todo-text" style="margin-left: 10px; line-height: 1.4;">
+                            <small style="display: block; font-size: 0.75em; color: #6c757d;">{{ task.created_at|date:"M d, Y" }}</small>
+                            {{ task.task }}
+                        </label>
+                    </div>
+                    
+                    <form method="post" action="{% url 'delete_task' task.id %}">
+                        {% csrf_token %}
+                            <button class="delete-btn" type="submit">×</button>
+                    </form>
+                    <form method="post" action="{% url 'update_task' task.id %}">
+                        {% csrf_token %}
+                            <button class="delete-btn" style="color: green;" type="submit">&#9745;</button>
+                    </form>
+                </li>
+            {% empty %}
+                <small class="todo-item" style="display: block; font-size: 0.9em; color: #6c757d; text-align: center;">No tasks yet. Add one above!</small>
+            {% endfor %}
+        </ul>
+        
+        <div class="todo-filters">
+            <p> Designed and Developed by Comibyte Team </p>
+        </div>
+    </div>
+
+{% endblock %}

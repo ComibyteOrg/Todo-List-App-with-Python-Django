@@ -1,0 +1,76 @@
+{% extends "base/base.html" %}
+{% block title %} Register {% endblock %}
+
+{% block content %}
+
+    <style>
+        .authForm{
+            width: 600px;
+            max-width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+        .authForm input {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            width: 100%;
+            margin: 0 0 10px 0;
+        }
+        .authForm button{
+            padding: 12px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .error{
+            color: red;
+        }
+        .form-link{
+            text-align: center;
+            padding: 10px;
+        }
+        .form-link a{
+            color: var(--primary);
+            text-decoration: none;
+        }
+    </style>
+
+    <div class="container">
+        <form method="post" class="authForm" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h1> Login To The Todo App </h1>
+                {% if error %}
+                    <p class="error"> {{ error }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+
+                <div class="form-link">
+                    <a href="{% url 'register' %}">Register If you dont have an account</a>
+                </div>
+
+            <button type="submit"> Login </button>
+        </form>
+    </div>
+
+
+{% endblock %}

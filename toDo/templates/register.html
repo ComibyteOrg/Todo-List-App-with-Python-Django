@@ -1,0 +1,72 @@
+{% extends "base/base.html" %}
+{% block title %} Register {% endblock %}
+
+{% block content %}
+
+    <style>
+        .authForm{
+            width: 600px;
+            max-width: 100%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+        .authForm input {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        .authForm button{
+            padding: 12px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .error{
+            color: red;
+            font-size: 0.8rem;
+            margin: 0 0 10px 0;
+        }
+        .form-link a{
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .form-link{
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+
+    <div class="container">
+        <form method="post" class="authForm" action="{% url 'register' %}">
+            <h1> Register To The Todo App </h1>
+            {% csrf_token %}
+            {% for field in form  %}
+                <div class="form-group">
+                    {{ field.label }}
+                    {{ field }}
+                    <p class="error">{% if field.errors %} {{ field.errors|join:', ' }} {% endif %} </p>
+                </div>
+            {% endfor %}
+
+            <div class="form-link">
+                <a href="{% url 'login' %}">login if you already have an account</a>
+            </div>
+
+            <button type="submit"> Register </button>
+        </form>
+    </div>
+
+
+{% endblock %}
